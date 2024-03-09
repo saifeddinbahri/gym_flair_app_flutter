@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gym_flair/screens/login/controllers/login_form_controller.dart';
+import 'package:gym_flair/screens/login/widgets/forgot_password.dart';
 import 'package:gym_flair/screens/login/widgets/input_label.dart';
 import 'package:gym_flair/screens/login/widgets/login_submit_button.dart';
 import 'package:gym_flair/screens/login/widgets/login_text_field.dart';
@@ -83,7 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(
-              height: screenHeight*0.06,
+              height: screenHeight*0.02,
+            ),
+            const ForgotPassword(),
+            SizedBox(
+              height: screenHeight*0.02,
             ),
             LoginSubmitButton(
               onPressed: () {  },
