@@ -7,8 +7,8 @@ class LoginFormField extends TextFormField {
     super.key,
     required TextEditingController super.controller,
     String? hintText,
-    IconData? icon,
-    bool obscureText = false,
+    Widget? icon,
+    super.obscureText,
     String? Function(String?)? validator,
     required BuildContext context
   }) : super(
@@ -23,7 +23,7 @@ class LoginFormField extends TextFormField {
       fillColor: Theme.of(context).colorScheme.surfaceVariant,
       hintText: hintText,
       hintStyle: Theme.of(context).textTheme.bodyLarge,
-      suffixIcon: icon != null ? Icon(icon) : null,
+      suffixIcon: icon,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide.none ,
         borderRadius: BorderRadius.circular(

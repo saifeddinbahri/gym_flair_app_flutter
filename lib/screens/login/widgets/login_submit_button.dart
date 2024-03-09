@@ -21,7 +21,7 @@ class LoginSubmitButton extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         side: BorderSide(color: Theme.of(context).colorScheme.inversePrimary),
         fixedSize: Size(
-            MediaQuery.of(context).size.width*0.7,
+            double.infinity,
             MediaQuery.of(context).
              size.height*ConstantSizes.buttonHeight),
         shape: RoundedRectangleBorder(
