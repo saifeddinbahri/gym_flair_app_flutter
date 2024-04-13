@@ -9,6 +9,8 @@ class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
       onTap: (){},
       child: Text('Forgot Password?',
           textAlign: TextAlign.right,

@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
-class LoginFormField extends TextFormField {
-  LoginFormField({
+class InscriptionFormField extends TextFormField {
+  InscriptionFormField({
+    super.onTap,
     super.key,
+    super.readOnly = false,
     required TextEditingController super.controller,
     String? hintText,
     Widget? icon,
@@ -48,6 +50,15 @@ class LoginFormField extends TextFormField {
             ConstantSizes.circularRadius
         ),
       ),
-    )
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.error,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(
+            ConstantSizes.circularRadius
+        ),
+      ),
+    ),
   );
 }

@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
-class LoginSubmitButton extends StatelessWidget {
+class InscriptionSubmitButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
 
-  const LoginSubmitButton({
+  const InscriptionSubmitButton({
     super.key,
     required this.onPressed,
     required this.text,
@@ -25,7 +25,8 @@ class LoginSubmitButton extends StatelessWidget {
              size.height*ConstantSizes.buttonHeight),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ConstantSizes.circularRadius)
-        )
+        ),
+
       ),
       child: Text(
         text,

@@ -9,6 +9,8 @@ import 'package:gym_flair/screens/login/widgets/login_submit_button.dart';
 import 'package:gym_flair/screens/login/widgets/login_text_field.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
+import '../../shared/widgets/backward_button.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -43,6 +45,17 @@ class _LoginScreenState extends State<LoginScreen> {
             child:  Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                BackwardButton(
+                  onPressed: (){Navigator.pop(context);},
+                ),
+              ],
+            ),
+            SizedBox(
+              height: screenHeight*0.04,
+            ),
             Text('Sign in',
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.headlineLarge!.fontSize,
@@ -51,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
             ),
              SizedBox(
-              height: screenHeight*0.1,
+              height: screenHeight*0.04,
             ),
            const LoginInputLabel(label: 'Username'),
             SizedBox(
@@ -86,7 +99,12 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: screenHeight*0.02,
             ),
-            const ForgotPassword(),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.end, 
+              children: [
+                 ForgotPassword(),
+              ],
+            ),
             SizedBox(
               height: screenHeight*0.02,
             ),
@@ -94,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {  },
               text: 'Connect',
             ),
+
           ],
         )
         ),
