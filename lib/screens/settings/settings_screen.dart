@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_flair/screens/settings/widgets/avatar.dart';
+import 'package:gym_flair/screens/settings/widgets/change_birthday.dart';
+import 'package:gym_flair/screens/settings/widgets/change_email.dart';
+import 'package:gym_flair/screens/settings/widgets/change_password.dart';
+import 'package:gym_flair/screens/settings/widgets/change_username.dart';
 import 'package:gym_flair/screens/settings/widgets/settings_item.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
@@ -31,24 +36,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: screenHeight * 0.03),
+             const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                 SettingsAvatar(),
+              ],
+            ),
+            SizedBox(height: screenHeight * 0.03),
+            Text(
+              'Bahri Saif Eddine',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontStyle: Theme.of(context).textTheme.titleLarge!.fontStyle,
+                fontWeight: FontWeight.w600,
+                fontFamily: Theme.of(context).textTheme.titleLarge!.fontFamily,
+                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+                overflow: TextOverflow.ellipsis
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.1),
             const SettingsItem(
               label: 'Username',
               icon: Icons.person,
+              screen: ChangeUsername(),
             ),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: screenHeight * 0.01),
             const SettingsItem(
               label: 'Email',
               icon: Icons.email,
+              screen: ChangeEmail(),
             ),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: screenHeight * 0.01),
             const SettingsItem(
               label: 'Birthdate',
               icon: Icons.cake,
+              screen: ChangeBirthday(),
             ),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: screenHeight * 0.01),
             const SettingsItem(
               label: 'Password',
               icon: Icons.lock,
+              screen: ChangePassword(),
             ),
           ],
         ),

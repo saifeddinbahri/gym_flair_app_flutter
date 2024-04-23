@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../shared/sizes.dart';
@@ -6,8 +6,11 @@ import '../../../shared/sizes.dart';
 class SettingsItem extends StatelessWidget {
   final String label;
   final IconData icon;
+  final Widget screen;
+
   const SettingsItem({
     super.key,
+    required this.screen,
     required this.label,
     required this.icon
   });
@@ -18,7 +21,14 @@ class SettingsItem extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return OutlinedButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (e)=>screen!,
+            ),
+          );
+        },
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.symmetric(
               vertical: screenHeight * ConstantSizes.inputVerticalPadding,
