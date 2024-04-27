@@ -35,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 'Profile settings',
                 style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: screenHeight * 0.05),
              const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -54,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 overflow: TextOverflow.ellipsis
               ),
             ),
-            SizedBox(height: screenHeight * 0.1),
+            SizedBox(height: screenHeight * 0.05),
             const SettingsItem(
               label: 'Username',
               icon: Icons.person,
