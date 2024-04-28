@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:gym_flair/screens/cours/widgets/reservation_dialog.dart';
 import '../../../shared/sizes.dart';
 
 class Item extends StatelessWidget {
@@ -21,6 +21,7 @@ class Item extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return OutlinedButton(
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.symmetric(
@@ -35,7 +36,16 @@ class Item extends StatelessWidget {
           Theme.of(context).colorScheme.surfaceVariant :
           Theme.of(context).colorScheme.inverseSurface.withOpacity(0.1)
         ),
-        onPressed: (){},
+        onPressed: (){
+          if (!valid) {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return ReservationDialog(title: title, time: hour, date: date);
+                }
+            );
+          }
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

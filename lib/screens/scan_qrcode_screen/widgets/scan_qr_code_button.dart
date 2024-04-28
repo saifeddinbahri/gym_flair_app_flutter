@@ -36,13 +36,9 @@ class ScanQrCodeButton extends StatelessWidget {
           children: [
             Text(
                 'Scan QR code',
-                 style: TextStyle(
-                   fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
-                   fontFamily: Theme.of(context).textTheme.labelLarge!.fontFamily,
-                   fontWeight: Theme.of(context).textTheme.labelLarge!.fontWeight,
-                   fontStyle: Theme.of(context).textTheme.labelLarge!.fontStyle,
+                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                    color: Colors.white
-                 ),
+                 )
             ),
             SizedBox(
               width: screenWidth*0.05,

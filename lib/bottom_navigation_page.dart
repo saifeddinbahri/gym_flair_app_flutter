@@ -36,7 +36,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: SizedBox(
+        bottomNavigationBar: Container(
+          color: Theme.of(context).colorScheme.surfaceVariant,
           width: MediaQuery.of(context).size.width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
