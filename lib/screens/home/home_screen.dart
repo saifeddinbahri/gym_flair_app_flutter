@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: screenHeight * 0.03),
-
               ],
             ),
           ),
