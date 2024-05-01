@@ -61,18 +61,18 @@ class EventItem extends StatelessWidget {
                   width: screenWidth,
                   loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loading) {
-                   if (loading == null) {
-                     return child;
-                   }
-                   return Shimmer.fromColors(
-                       baseColor: Colors.grey[300]!,
-                       highlightColor:Colors.grey[100]!,
+                   if (loading != null) {
+                     return Shimmer.fromColors(
+                       baseColor: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.1),
+                       highlightColor: Theme.of(context).colorScheme.inversePrimary!.withOpacity(0.03),
                        child: Container(
                          height: screenHeight * 0.26,
                          width: screenWidth,
                          color: Colors.white,
                        ),
-                       );
+                     );
+                   }
+                   return child;
                   },
               ),
             ),

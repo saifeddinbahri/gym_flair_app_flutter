@@ -34,7 +34,7 @@ class ReservationDialog extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                fontWeight:FontWeight.w700
+                fontWeight:FontWeight.w400
             ),
           ),
           SizedBox(height: screenHeight * 0.03),
@@ -54,13 +54,13 @@ class ReservationDialog extends StatelessWidget {
                 Text(
                   'Instructor',
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     fontSize: screenWidth * 0.045
                   )
                 ),
                 SizedBox(height: screenHeight * 0.01,),
                 const Divider(
-                  thickness: 3,
+                  thickness: 2,
                   height: 5,
                 ),
                 SizedBox(height: screenHeight * 0.01,),
@@ -78,7 +78,7 @@ class ReservationDialog extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             trainer,
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                   fontSize: screenWidth * 0.045
                               )
                                               ),
@@ -151,7 +151,7 @@ class ReservationDialog extends StatelessWidget {
           ),
           const VerticalDivider(
             width: 5,
-            thickness: 3,
+            thickness: 2,
           ),
           Expanded(
             child: Align(
