@@ -49,6 +49,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ],
           ),
         ),
-        body: pages[activeIndex]);
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: pages[activeIndex],
+        )
+    );
   }
 }

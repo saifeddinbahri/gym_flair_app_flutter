@@ -9,11 +9,13 @@ class Item extends StatelessWidget {
     required this.date,
     required this.capacity,
     required this.hour,
-    required this.valid
+    required this.valid,
+    required this.trainer
   });
   final String title;
   final String date;
   final String hour;
+  final String trainer;
   final bool valid;
   final String capacity;
 
@@ -34,14 +36,19 @@ class Item extends StatelessWidget {
           ),
           backgroundColor: valid ?
           Theme.of(context).colorScheme.surfaceVariant :
-          Theme.of(context).colorScheme.inverseSurface.withOpacity(0.1)
+          Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
         onPressed: (){
           if (!valid) {
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return ReservationDialog(title: title, time: hour, date: date);
+                  return ReservationDialog(
+                      title: title,
+                      time: hour,
+                      date: date,
+                      trainer: trainer,
+                  );
                 }
             );
           }

@@ -49,6 +49,7 @@ class _SettingsAvatarState extends State<SettingsAvatar> {
       ],
     );
   }
+
   Future getImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 

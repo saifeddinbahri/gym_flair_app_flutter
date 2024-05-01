@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gym_flair/bottom_navigation_page.dart';
 import 'package:gym_flair/screens/login/controllers/login_form_controller.dart';
 import 'package:gym_flair/screens/login/widgets/forgot_password.dart';
 import 'package:gym_flair/screens/login/widgets/input_label.dart';
@@ -109,7 +110,15 @@ class _LoginScreenState extends State<LoginScreen> {
               height: screenHeight*0.02,
             ),
             LoginSubmitButton(
-              onPressed: () {  },
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BottomNavigation()
+                    ),
+                    ModalRoute.withName("/Home")
+                );
+              },
               text: 'Connect',
             ),
 

@@ -18,7 +18,7 @@ class CoursesScreenAppbar extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: screenHeight * 0.15,
+      height: screenHeight * 0.16,
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -43,7 +43,7 @@ class CoursesScreenAppbar extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          SizedBox(height: screenHeight * 0.02,),
+          SizedBox(height: screenHeight * 0.01,),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -56,22 +56,35 @@ class CoursesScreenAppbar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(ConstantSizes.circularRadius),
                 ),
                 tabs: [
-                  Text(
-                    'Courses',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant
+                  Padding(
+                    padding:  EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.13 ,
+                        vertical: screenHeight *0.01
+                    ),
+                    child: Text(
+                      'Classes',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant
+                      ),
                     ),
                   ),
-                  Text(
-                    'Events',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant
+                  Padding(
+                    padding:  EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.13 ,
+                        vertical: screenHeight *0.01
+                    ),
+                    child: Text(
+                      'Events',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant
+                      ),
                     ),
                   )
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(height: screenHeight * 0.01,),
         ],
       ),
     );
