@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:gym_flair/screens/home/widgets/scan_qr_code_button.dart';
+import 'package:gym_flair/screens/home/widgets/section_container.dart';
 import '../../shared/sizes.dart';
 import '../../shared/widgets/screen_title.dart';
 
@@ -32,8 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: screenHeight * 0.03),
-                Text('Hi, saif',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                const SectionContainer(
+                  title: 'QR Scan',
+                  child: ScanQrCodeButton()
                 ),
                 SizedBox(height: screenHeight * 0.03),
               ],
