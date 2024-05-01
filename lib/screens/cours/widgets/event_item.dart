@@ -16,10 +16,8 @@ class EventItem extends StatelessWidget {
     required this.description,
     required this.image,
     required this.participated,
-    required this.id
   });
   final bool participated;
-  final String id;
   final String image;
   final String title;
   final String date;
@@ -48,17 +46,7 @@ class EventItem extends StatelessWidget {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (e)=> EventDetails(
-                  title: title,
-                  hour: hour,
-                  date: date,
-                  participantCount: participantCount,
-                  description: description,
-                  image: image,
-                  id: id,
-                  participated: participated),
-            ),
+            _createRoute()
           );
         },
         child: Column(
@@ -66,29 +54,26 @@ class EventItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(ConstantSizes.circularRadius),
-              child: Hero(
-                tag: id,
-                child: Image.network(
-                    image,
-                    fit: BoxFit.fill,
-                    height: screenHeight * 0.26,
-                    width: screenWidth,
-                    loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loading) {
-                     if (loading == null) {
-                       return child;
-                     }
-                     return Shimmer.fromColors(
-                         baseColor: Colors.grey[300]!,
-                         highlightColor:Colors.grey[100]!,
-                         child: Container(
-                           height: screenHeight * 0.26,
-                           width: screenWidth,
-                           color: Colors.white,
-                         ),
-                         );
-                    },
-                ),
+              child: Image.network(
+                  image,
+                  fit: BoxFit.fill,
+                  height: screenHeight * 0.26,
+                  width: screenWidth,
+                  loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loading) {
+                   if (loading == null) {
+                     return child;
+                   }
+                   return Shimmer.fromColors(
+                       baseColor: Colors.grey[300]!,
+                       highlightColor:Colors.grey[100]!,
+                       child: Container(
+                         height: screenHeight * 0.26,
+                         width: screenWidth,
+                         color: Colors.white,
+                       ),
+                       );
+                  },
               ),
             ),
             SizedBox(height: screenHeight * 0.01,),
@@ -140,6 +125,30 @@ class EventItem extends StatelessWidget {
     )
     );
   }
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => EventDetails(
+          title: title,
+          hour: hour,
+          date: date,
+          participantCount: participantCount,
+          description: description,
+          image: image,
+          participated: participated
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
 }

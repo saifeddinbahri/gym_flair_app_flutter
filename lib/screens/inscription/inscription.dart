@@ -55,6 +55,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                       children: [
                         BackwardButton(
                             onPressed: (){Navigator.pop(context);},
+                            color: Theme.of(context).colorScheme.surfaceVariant,
                         ),
                       ],
                     ),

@@ -44,6 +44,7 @@ class _ChangeBirthdayState extends State<ChangeBirthday> {
               children: [
                 BackwardButton(
                   onPressed: (){Navigator.pop(context);},
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
             ),

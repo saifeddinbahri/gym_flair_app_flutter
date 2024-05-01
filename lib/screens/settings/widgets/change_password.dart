@@ -42,6 +42,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 BackwardButton(
                   onPressed: (){Navigator.pop(context);},
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
             ),

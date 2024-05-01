@@ -4,10 +4,11 @@ import 'package:gym_flair/shared/sizes.dart';
 
 class BackwardButton extends StatelessWidget {
   final VoidCallback onPressed;
-
+  final Color color;
   const BackwardButton({
     super.key,
     required this.onPressed,
+    required this.color
   });
 
   @override
@@ -16,8 +17,8 @@ class BackwardButton extends StatelessWidget {
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.all(15),
-          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-          side: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
+          backgroundColor: color,
+          side: BorderSide(color: color),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(ConstantSizes.circularRadius)
           )

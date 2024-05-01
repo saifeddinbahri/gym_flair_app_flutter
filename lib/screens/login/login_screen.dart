@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 BackwardButton(
                   onPressed: (){Navigator.pop(context);},
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
             ),

@@ -38,6 +38,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
               children: [
                 BackwardButton(
                   onPressed: (){Navigator.pop(context);},
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
             ),

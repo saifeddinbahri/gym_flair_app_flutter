@@ -28,7 +28,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
   ] ;
 
   List<dynamic> eventItems = [
-    {'title': 'Even 1', 'content': 'Event made by tek-up', 'date': 'January 10 2022', 'hour': '10 AM', 'isChecked': true, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
+    {'title': 'Marathon ', 'content': "Join The Coastal Challenge Marathon on June 15, 2024, at Rivertown Beach. Lace up your running shoes for an exhilarating journey along the scenic coastline, where rolling hills meet breathtaking ocean views. With strategically placed aid stations to fuel your progress, you'll conquer every mile with determination. Finisher medals will be awarded as a testament to your achievement, followed by a vibrant post-race celebration filled with music, food, and camaraderie. Don't miss out on this opportunity to push your limits and create lasting memories. Register now and prepare for an unforgettable experience at The Coastal Challenge Marathon!", 'date': 'January 10 2022', 'hour': '10 AM', 'isChecked': true, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
     {'title': 'Even 1', 'content': 'Event made by tek-up', 'date': 'Mars 03 2022', 'hour': '10 AM', 'isChecked': true, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
     {'title': 'Even 1', 'content': 'Event made by tek-up', 'date': 'August 13 2022', 'hour': '10 AM', 'isChecked': false, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
     {'title': 'Even 1', 'content': 'Event made by tek-up', 'date': 'January 20 2022', 'hour': '10 AM', 'isChecked': true, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
@@ -125,7 +125,6 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                            child: SizedBox(
                              height: screenHeight * 0.5,
                              child: EventItem(
-                                 id: '$index',
                                  title: eventItems[index]['title'],
                                  date: eventItems[index]['date'],
                                  description: eventItems[index]['content'],

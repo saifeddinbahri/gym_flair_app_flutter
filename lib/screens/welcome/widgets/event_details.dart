@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gym_flair/shared/widgets/backward_button.dart';
 
 import '../../../shared/sizes.dart';
 import 'data_container.dart';
@@ -13,10 +14,8 @@ class EventDetails extends StatelessWidget {
     required this.participantCount,
     required this.description,
     required this.image,
-    required this.id,
     required this.participated
   });
-  final String id;
   final String image;
   final String title;
   final String date;
@@ -34,13 +33,20 @@ class EventDetails extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Hero(
-            tag: id,
-            child: Image.network(
-                image,
-                fit: BoxFit.fill,
-                height: screenHeight * 0.35,
-                width: screenWidth,
+          Image.network(
+              image,
+              fit: BoxFit.fill,
+              height: screenHeight * 0.35,
+              width: screenWidth,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: screenHeight * 0.03,
+                left: screenWidth * ConstantSizes.horizontalPadding
+            ),
+            child: BackwardButton(
+                onPressed: () {Navigator.pop(context);},
+                color: Colors.white
             ),
           ),
           Container(
@@ -105,7 +111,7 @@ class EventDetails extends StatelessWidget {
                 DataContainer(icon: Icons.calendar_month,content: date),
                 SizedBox(height: screenHeight * 0.01,),
                 DataContainer(icon: Icons.access_time, content: hour),
-                SizedBox(height: screenHeight * 0.02,),
+                SizedBox(height: screenHeight * 0.03,),
                 Text(
                   description,
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(

@@ -40,6 +40,7 @@ class _ChangeUsernameState extends State<ChangeUsername> {
               children: [
                 BackwardButton(
                   onPressed: (){Navigator.pop(context);},
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
             ),
