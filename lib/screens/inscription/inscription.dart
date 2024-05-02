@@ -7,6 +7,7 @@ import 'package:gym_flair/screens/inscription/widgets/inscription_text_field.dar
 
 import 'package:gym_flair/shared/sizes.dart';
 import 'package:gym_flair/shared/widgets/backward_button.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class InscriptionScreen extends StatefulWidget {
@@ -24,12 +25,17 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _date = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
+  final TextEditingController _pickImage = TextEditingController();
   final InscriptionController _formController = InscriptionController();
+
   bool _hidePassword = true;
   int? day;
   int? month;
   int? year;
   DateTime? selectedDate;
+  final ImagePicker _picker = ImagePicker();
+  XFile? _image;
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -80,6 +86,21 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                       context: context,
                       controller: _username,
                       hintText: 'Enter username',
+                      validator: (value) => _formController.validateUsername(value),
+                    ),
+                    SizedBox(
+                      height: screenHeight*0.03,
+                    ),
+                    const InscriptionInputLabel(label: 'Profile image'),
+                    SizedBox(
+                      height: screenHeight*0.01,
+                    ),
+                    InscriptionFormField(
+                      context: context,
+                      controller: _pickImage,
+                      readOnly: true,
+                      onTap: () {getImage();},
+                      hintText: 'Select image',
                       validator: (value) => _formController.validateUsername(value),
                     ),
                     SizedBox(
@@ -182,5 +203,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
         print(year);
       });
     }
+  }
+
+  Future getImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+      _pickImage.text = image!.name;
+    });
   }
 }
