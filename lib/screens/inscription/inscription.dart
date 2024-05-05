@@ -4,6 +4,7 @@ import 'package:gym_flair/screens/inscription/controller/inscription_form_contro
 import 'package:gym_flair/screens/inscription/widgets/input_label.dart';
 import 'package:gym_flair/screens/inscription/widgets/inscription_submit_button.dart';
 import 'package:gym_flair/screens/inscription/widgets/inscription_text_field.dart';
+import 'package:gym_flair/services/sign_up_service.dart';
 
 import 'package:gym_flair/shared/sizes.dart';
 import 'package:gym_flair/shared/widgets/backward_button.dart';
@@ -27,6 +28,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _pickImage = TextEditingController();
   final InscriptionController _formController = InscriptionController();
+  final _focusNode = FocusNode();
 
   bool _hidePassword = true;
   int? day;
@@ -159,6 +161,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                       height: screenHeight*0.01,
                     ),
                     InscriptionFormField(
+                      focusNode: _focusNode,
                       context: context,
                       controller: _confirmPassword,
                       hintText: 'Re enter password',
@@ -169,7 +172,9 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                      height: screenHeight*0.055,
                    ),
                     InscriptionSubmitButton(
-                      onPressed: () { _formController.submitInscription(_formKey); },
+                      onPressed: () {
+                        submit(context);
+                        },
                       text: 'Confirm',
                     ),
                     SizedBox(
@@ -212,5 +217,21 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
       _image = image;
       _pickImage.text = image!.name;
     });
+  }
+
+  void submit(BuildContext context) async {
+     _focusNode.unfocus();
+    if (_formKey.currentState!.validate()) {
+      var service = SignUpService();
+      Map<String, dynamic> data = {
+        'username': _username.text,
+        'birth': _date.text,
+        'password': _password.text,
+        'email': _email.text,
+        'image': _image
+      };
+      await service.signUp(context, mounted, data);
+    }
+
   }
 }

@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:gym_flair/screens/home/home_screen.dart';
+import 'package:gym_flair/screens/welcome/welcome_screen.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
 class ScreenTitle extends StatelessWidget {
@@ -13,7 +16,7 @@ class ScreenTitle extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.06,
+        top: screenHeight * 0.04,
         bottom: screenHeight * 0.02,
         left: screenWidth * ConstantSizes.horizontalPadding
       ),
@@ -28,10 +31,75 @@ class ScreenTitle extends StatelessWidget {
           )
         ]
       ),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleLarge,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          IconButton(
+              onPressed: (){
+                _disconnectDialog(context);
+              },
+              icon: const Icon(Icons.logout)
+          )
+        ],
+      )
+    );
+  }
+  void _disconnectDialog(BuildContext context){
+    Size size = MediaQuery.of(context).size;
+    AlertDialog alert = AlertDialog(
+      content:  Text(
+        "Déconnecter",
+        style: TextStyle(
+            fontSize: size.width*0.05
+        ),
       ),
+      actions: [
+        TextButton(
+            onPressed:()=>Navigator.pop(context) ,
+            child: Text(
+              "Fermer",
+              style: TextStyle(
+                  fontSize: size.width*0.04,
+                  color: Theme.of(context).colorScheme.primary
+              ),
+            )
+        ),
+        TextButton(
+            onPressed:() async{
+
+              const storage =  FlutterSecureStorage();
+              await storage.delete(key: 'token');
+              await storage.delete(key: 'role');
+              if(context.mounted){
+                Navigator.pop(context);
+                Navigator.pushReplacement<void, void>(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const WelcomeScreen(),
+                  ),
+                );
+              }
+
+            },
+            child: Text(
+              "Déconnecter",
+              style: TextStyle(
+                  fontSize: size.width*0.04,
+                  color: Colors.red
+              ),
+            )
+        )
+      ],
+      shape:  const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+      ),
+    );
+    showDialog(context: context,
+        builder:(BuildContext context)=>alert
     );
   }
 }

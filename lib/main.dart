@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_flair/bottom_navigation_page.dart';
+import 'package:gym_flair/check_and_redirect_if_loggedin.dart';
 import 'package:gym_flair/screens/home/home_screen.dart';
 import 'package:gym_flair/screens/inscription/inscription.dart';
 import 'package:gym_flair/screens/login/login_screen.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const WelcomeScreen(),
+      home: const Redirect(),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:gym_flair/screens/login/widgets/forgot_password.dart';
 import 'package:gym_flair/screens/login/widgets/input_label.dart';
 import 'package:gym_flair/screens/login/widgets/login_submit_button.dart';
 import 'package:gym_flair/screens/login/widgets/login_text_field.dart';
+import 'package:gym_flair/services/sign_in_service.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
 import '../../shared/widgets/backward_button.dart';
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _password = TextEditingController();
   final LoginFormController _formController = LoginFormController();
   bool _hidePassword = true;
+  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             LoginFormField(
               context: context,
+              focusNode: _focusNode,
               controller: _password,
               hintText: 'Enter password',
               validator:  (value){_formController.validatePassword(value);},
@@ -111,15 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: screenHeight*0.02,
             ),
             LoginSubmitButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BottomNavigation()
-                    ),
-                    ModalRoute.withName("/Home")
-                );
-              },
+              onPressed: submit,
               text: 'Connect',
             ),
 
@@ -128,5 +123,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       )
     );
+  }
+  void submit() async {
+    _focusNode.unfocus();
+    if (_formKey.currentState!.validate()) {
+      var service = SignInService();
+      await service.signIn(context, mounted, {
+        'username':_username.text,
+        'password': _password.text
+      });
+    }
   }
 }

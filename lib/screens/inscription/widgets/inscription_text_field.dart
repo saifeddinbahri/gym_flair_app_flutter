@@ -4,6 +4,7 @@ import 'package:gym_flair/shared/sizes.dart';
 
 class InscriptionFormField extends TextFormField {
   InscriptionFormField({
+    super.focusNode,
     super.onTap,
     super.key,
     super.readOnly = false,

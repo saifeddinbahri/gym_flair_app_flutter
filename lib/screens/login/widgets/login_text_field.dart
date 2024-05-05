@@ -5,6 +5,7 @@ import 'package:gym_flair/shared/sizes.dart';
 class LoginFormField extends TextFormField {
   LoginFormField({
     super.key,
+    super.focusNode,
     required TextEditingController super.controller,
     String? hintText,
     Widget? icon,
