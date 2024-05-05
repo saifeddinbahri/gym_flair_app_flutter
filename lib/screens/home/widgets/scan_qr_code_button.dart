@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_flair/screens/scan_qrcode_screen/widgets/qr_scanner_screen.dart';
+import 'package:gym_flair/screens/home/widgets/qr_scanner_screen.dart';
 import '../../../shared/sizes.dart';
 
 class ScanQrCodeButton extends StatelessWidget {

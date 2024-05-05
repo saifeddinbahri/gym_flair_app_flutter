@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/cours/cours_screen.dart';
+import 'package:gym_flair/screens/equipments/equipments_screen.dart';
 import 'package:gym_flair/screens/home/home_screen.dart';
-import 'package:gym_flair/screens/scan_qrcode_screen/scan_qr_screen.dart';
 import 'package:gym_flair/screens/settings/settings_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -26,7 +26,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void initState() {
     pages = [
       const HomeScreen(),
-      const ScanQrCodeScreen(),
+      const EquipmentScreen(),
       const CoursesScreen(),
       const SettingsScreen()
     ];
