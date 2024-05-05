@@ -1,17 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_flair/services/constant.dart';
+import 'package:gym_flair/services/user_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SettingsAvatar extends StatefulWidget {
-  const SettingsAvatar({super.key});
-
+  const SettingsAvatar({
+    required this.photo,
+    super.key
+  });
+ final String photo;
   @override
   State<SettingsAvatar> createState() => _SettingsAvatarState();
 }
 
 class _SettingsAvatarState extends State<SettingsAvatar> {
   final ImagePicker _picker = ImagePicker();
-  XFile? _image;
+  String? photo;
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +29,9 @@ class _SettingsAvatarState extends State<SettingsAvatar> {
       children: [
         CircleAvatar(
         backgroundColor: Colors.brown,
-        backgroundImage: const NetworkImage(
-          'https://res.cloudinary.com/demo/image/fetch/https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
+        backgroundImage: NetworkImage(photo == null ?
+        '${Constants.imageUrl}${widget.photo}' :
+        '${Constants.imageUrl}$photo'
         ),
           radius: screenWidth*0.3 ,
       ),
@@ -52,9 +59,10 @@ class _SettingsAvatarState extends State<SettingsAvatar> {
 
   Future getImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
+    var service = UserService();
+    var res = await service.updateImage(image!);
     setState(() {
-      _image = image;
+      photo = res;
     });
   }
 }

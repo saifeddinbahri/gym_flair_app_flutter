@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/settings/widgets/input_label.dart';
 import 'package:gym_flair/screens/settings/widgets/submit_button.dart';
 import 'package:gym_flair/screens/settings/widgets/text_field.dart';
+import '../../../services/user_service.dart';
 import '../../../shared/sizes.dart';
 import '../../../shared/widgets/backward_button.dart';
 
 class ChangeEmail extends StatefulWidget {
-  const ChangeEmail({super.key});
+  const ChangeEmail({
+    required this.email,
+    super.key
+  });
+  final String email;
 
   @override
   State<ChangeEmail> createState() => _ChangeEmailState();
@@ -14,9 +19,15 @@ class ChangeEmail extends StatefulWidget {
 
 class _ChangeEmailState extends State<ChangeEmail> {
 
-  final TextEditingController _username = TextEditingController();
+  final TextEditingController _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _email.text = widget.email;
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -53,7 +64,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
             Form(
               key: _formKey,
               child: SettingsFormField(
-                controller: _username,
+                controller: _email,
                 context: context,
                 hintText: 'Enter email',
                 validator: (val) {
@@ -67,13 +78,20 @@ class _ChangeEmailState extends State<ChangeEmail> {
             SizedBox(height: screenHeight * 0.03),
             SubmitButton(
               text: 'Confirm',
-              onPressed: () {
-                _formKey.currentState!.validate();
-              },
+              onPressed: submit,
             )
           ],
         ),
       ),
     );
+  }
+  void submit() async {
+    if (_formKey.currentState!.validate()) {
+      var service = UserService();
+      var res = await service.editEmail(_email.text, context);
+      if (res == 1) {
+        Navigator.pop(context,1);
+      }
+    }
   }
 }

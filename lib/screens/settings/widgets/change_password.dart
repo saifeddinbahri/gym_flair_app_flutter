@@ -4,6 +4,7 @@ import 'package:gym_flair/screens/settings/widgets/input_label.dart';
 import 'package:gym_flair/screens/settings/widgets/submit_button.dart';
 import 'package:gym_flair/screens/settings/widgets/text_field.dart';
 
+import '../../../services/user_service.dart';
 import '../../../shared/sizes.dart';
 import '../../../shared/widgets/backward_button.dart';
 
@@ -62,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   SettingsFormField(
                     context: context,
                     controller: _password,
-                    hintText: 'enter password',
+                    hintText: 'Enter password',
                     obscureText: _hidePassword,
                     icon: IconButton(
                       icon: Icon(_hidePassword ? Icons.visibility: Icons.visibility_off),
@@ -83,7 +84,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   SettingsFormField(
                     context: context,
                     controller: _confirmPassword,
-                    hintText: 'Re enter password',
+                    hintText: 'New password',
                     obscureText: _hidePassword,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
@@ -98,13 +99,20 @@ class _ChangePasswordState extends State<ChangePassword> {
             SizedBox(height: screenHeight * 0.03),
             SubmitButton(
               text: 'Confirm',
-              onPressed: () {
-                _formKey.currentState!.validate();
-              },
+              onPressed: submit,
             )
           ],
         ),
       ),
     );
+  }
+  void submit() async {
+    if (_formKey.currentState!.validate()) {
+      var service = UserService();
+      var res = await service.editPassword(_password.text, _confirmPassword.text, context);
+      if (res == 1) {
+        Navigator.pop(context,0);
+      }
+    }
   }
 }

@@ -3,12 +3,17 @@ import 'package:flutter/widgets.dart';
 import 'package:gym_flair/screens/settings/widgets/input_label.dart';
 import 'package:gym_flair/screens/settings/widgets/submit_button.dart';
 import 'package:gym_flair/screens/settings/widgets/text_field.dart';
+import 'package:gym_flair/services/user_service.dart';
 
 import '../../../shared/sizes.dart';
 import '../../../shared/widgets/backward_button.dart';
 
 class ChangeUsername extends StatefulWidget {
-  const ChangeUsername({super.key});
+  const ChangeUsername({
+    super.key,
+    required this.username
+  });
+  final String username;
 
   @override
   State<ChangeUsername> createState() => _ChangeUsernameState();
@@ -18,6 +23,13 @@ class _ChangeUsernameState extends State<ChangeUsername> {
 
   final TextEditingController _username = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _username.text = widget.username;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +51,7 @@ class _ChangeUsernameState extends State<ChangeUsername> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 BackwardButton(
-                  onPressed: (){Navigator.pop(context);},
+                  onPressed: (){Navigator.pop(context,0);},
                   color: Theme.of(context).colorScheme.surfaceVariant,
                 ),
               ],
@@ -69,13 +81,20 @@ class _ChangeUsernameState extends State<ChangeUsername> {
             SizedBox(height: screenHeight * 0.03),
             SubmitButton(
               text: 'Confirm',
-              onPressed: () {
-                _formKey.currentState!.validate();
-              },
+              onPressed: submit,
             )
           ],
         ),
       ),
     );
+  }
+  void submit() async {
+    if (_formKey.currentState!.validate()) {
+      var service = UserService();
+      var res = await service.editUsername(_username.text, context);
+      if (res == 1) {
+        Navigator.pop(context,1);
+      }
+    }
   }
 }

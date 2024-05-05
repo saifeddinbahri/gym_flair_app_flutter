@@ -7,9 +7,10 @@ class SettingsItem extends StatelessWidget {
   final String label;
   final IconData icon;
   final Widget screen;
-
+  final void Function() callbackAction;
   const SettingsItem({
     super.key,
+    required this.callbackAction,
     required this.screen,
     required this.label,
     required this.icon
@@ -21,13 +22,16 @@ class SettingsItem extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return OutlinedButton(
-        onPressed: (){
-          Navigator.push(
+        onPressed: ()async {
+         var res = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (e)=>screen!,
             ),
           );
+         if (res!= null && res == 1) {
+           callbackAction();
+         }
         },
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.symmetric(

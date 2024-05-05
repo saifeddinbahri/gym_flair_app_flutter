@@ -5,6 +5,7 @@ import 'package:gym_flair/screens/settings/widgets/change_email.dart';
 import 'package:gym_flair/screens/settings/widgets/change_password.dart';
 import 'package:gym_flair/screens/settings/widgets/change_username.dart';
 import 'package:gym_flair/screens/settings/widgets/settings_item.dart';
+import 'package:gym_flair/services/user_service.dart';
 import 'package:gym_flair/shared/sizes.dart';
 import 'package:gym_flair/shared/widgets/screen_title.dart';
 
@@ -16,11 +17,23 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  
+  bool loading = true;
+  late Map<String, dynamic> data;
+  final service = UserService();
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userData();
+  }
+  
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
+    
     return  SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,19 +45,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
               right: screenWidth * ConstantSizes.horizontalPadding,
               top: screenHeight * 0.02
             ),
-            child:  Column(
+            child: loading ?
+              const Center(child: CircularProgressIndicator())
+                : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: screenHeight * 0.05),
-                 const Row(
+                  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     SettingsAvatar(),
+                     SettingsAvatar(photo:data['photo']),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.03),
                 Text(
-                  'Bahri Saif Eddine',
+                  data['username'],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontStyle: Theme.of(context).textTheme.titleLarge!.fontStyle,
@@ -55,28 +70,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.05),
-                const SettingsItem(
+                SettingsItem(
+                  callbackAction: userData,
                   label: 'Username',
                   icon: Icons.person,
-                  screen: ChangeUsername(),
+                  screen: ChangeUsername(username: data['username']),
                 ),
                 SizedBox(height: screenHeight * 0.01),
-                const SettingsItem(
+                SettingsItem(
+                  callbackAction: userData,
                   label: 'Email',
                   icon: Icons.email,
-                  screen: ChangeEmail(),
+                  screen: ChangeEmail(email: data['email']),
                 ),
                 SizedBox(height: screenHeight * 0.01),
-                const SettingsItem(
+                SettingsItem(
+                  callbackAction: userData,
                   label: 'Birthdate',
                   icon: Icons.cake,
-                  screen: ChangeBirthday(),
+                  screen: ChangeBirthday(birth: data['birth']),
                 ),
                 SizedBox(height: screenHeight * 0.01),
-                const SettingsItem(
+                SettingsItem(
+                  callbackAction: userData,
                   label: 'Password',
                   icon: Icons.lock,
-                  screen: ChangePassword(),
+                  screen: const ChangePassword(),
                 ),
               ],
             ),
@@ -84,5 +103,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+  void userData() async{
+    data = await service.getProfileData();
+    loading = false;
+    setState(() {
+    });
   }
 }

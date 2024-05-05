@@ -4,12 +4,13 @@ import 'package:gym_flair/screens/settings/widgets/submit_button.dart';
 import 'package:gym_flair/screens/settings/widgets/text_field.dart';
 import 'package:intl/intl.dart';
 
+import '../../../services/user_service.dart';
 import '../../../shared/sizes.dart';
 import '../../../shared/widgets/backward_button.dart';
 
 class ChangeBirthday extends StatefulWidget {
-  const ChangeBirthday({super.key});
-
+  const ChangeBirthday({super.key, required this.birth});
+  final String birth;
   @override
   State<ChangeBirthday> createState() => _ChangeBirthdayState();
 }
@@ -22,6 +23,13 @@ class _ChangeBirthdayState extends State<ChangeBirthday> {
   int? month;
   int? year;
   DateTime? selectedDate;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _date.text = widget.birth.substring(0, 10);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +83,7 @@ class _ChangeBirthdayState extends State<ChangeBirthday> {
             SizedBox(height: screenHeight * 0.03),
             SubmitButton(
               text: 'Confirm',
-              onPressed: () {
-                _formKey.currentState!.validate();
-              },
+              onPressed: submit,
             )
           ],
         ),
@@ -100,6 +106,15 @@ class _ChangeBirthdayState extends State<ChangeBirthday> {
         month = int.parse(selectedDate.toString().substring(5, 7));
         year = int.parse(selectedDate.toString().substring(0,4));
       });
+    }
+  }
+  void submit() async {
+    if (_formKey.currentState!.validate()) {
+      var service = UserService();
+      var res = await service.editBirth(_date.text, context);
+      if (res == 1) {
+        Navigator.pop(context,1);
+      }
     }
   }
 }
