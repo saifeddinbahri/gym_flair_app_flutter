@@ -43,7 +43,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(onPressed: () => changeActivePage(0), icon: const Icon(Icons.home)),
-              IconButton(onPressed: () => changeActivePage(1), icon: const Icon(Icons.qr_code)),
+              IconButton(onPressed: () => changeActivePage(1), icon: const Icon(Icons.shopping_cart)),
               IconButton(onPressed: () => changeActivePage(2), icon: const Icon(Icons.fitness_center)),
               IconButton(onPressed: () => changeActivePage(3), icon: const Icon(Icons.settings)),
             ],
