@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:gym_flair/bottom_navigation_page.dart';
 import 'package:gym_flair/screens/login/controllers/login_form_controller.dart';
 import 'package:gym_flair/screens/login/widgets/forgot_password.dart';
-import 'package:gym_flair/screens/login/widgets/input_label.dart';
+import 'package:gym_flair/shared/widgets/input_label.dart';
 import 'package:gym_flair/screens/login/widgets/login_submit_button.dart';
 import 'package:gym_flair/screens/login/widgets/login_text_field.dart';
 import 'package:gym_flair/services/sign_in_service.dart';
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
              SizedBox(
               height: screenHeight*0.04,
             ),
-           const LoginInputLabel(label: 'Username'),
+           const InputLabel(label: 'Username'),
             SizedBox(
               height: screenHeight*0.01,
             ),
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
              SizedBox(
               height: screenHeight*0.03,
             ),
-            const LoginInputLabel(label: 'Password'),
+            const InputLabel(label: 'Password'),
             SizedBox(
               height: screenHeight*0.01,
             ),

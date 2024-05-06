@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-class InscriptionInputLabel extends StatelessWidget {
+class InputLabel extends StatelessWidget {
   final String label;
-  const InscriptionInputLabel({
+  const InputLabel({
     super.key,
     required this.label
   });

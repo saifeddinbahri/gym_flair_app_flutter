@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/cours/widgets/reservation_dialog.dart';
+import 'package:gym_flair/screens/equipments/widgets/equipment_item_details.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../shared/sizes.dart';
 
@@ -34,7 +35,12 @@ class EquipmentItem extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+              context,
+              _createRoute()
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -99,6 +105,27 @@ class EquipmentItem extends StatelessWidget {
             ),
           ],
         )
+    );
+  }
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => EquipmentItemDetails(
+          label: label,
+          price: price,
+          description: description,
+          image: image),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

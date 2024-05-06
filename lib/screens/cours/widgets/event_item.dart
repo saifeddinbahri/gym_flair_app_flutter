@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:gym_flair/screens/welcome/widgets/event_details.dart';
+import 'package:gym_flair/screens/cours/widgets/event_details.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../shared/sizes.dart';
-import '../../welcome/widgets/data_container.dart';
+import 'data_container.dart';
+
 
 class EventItem extends StatelessWidget {
   const EventItem({

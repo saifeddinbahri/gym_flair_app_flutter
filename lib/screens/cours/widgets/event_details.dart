@@ -5,6 +5,7 @@ import 'package:gym_flair/shared/widgets/backward_button.dart';
 import '../../../shared/sizes.dart';
 import 'data_container.dart';
 
+
 class EventDetails extends StatelessWidget {
   const EventDetails({
     super.key,
