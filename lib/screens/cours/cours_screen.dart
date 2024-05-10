@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:gym_flair/screens/cours/widgets/cours_screen_appbar.dart';
 import 'package:gym_flair/screens/cours/widgets/event_item.dart';
 import 'package:gym_flair/screens/cours/widgets/item.dart';
+import 'package:gym_flair/services/courses_service.dart';
 import 'package:gym_flair/shared/widgets/screen_title.dart';
 
 import '../../shared/sizes.dart';
@@ -17,15 +18,9 @@ class CoursesScreen extends StatefulWidget {
 
 class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController ;
-  List<dynamic> items = [
-    { 'title': 'Upper workout', 'capacity': '15', 'date': 'janvier 5 2022', 'hour': '09 AM', 'valid': true, 'trainer': 'Ahmed ben ali' },
-    { 'title': 'Legs workout', 'capacity': '20', 'date': 'janvier 6 2022', 'hour': '10 AM', 'valid': true, 'trainer': 'Amine salah' },
-    { 'title': 'Cardio', 'capacity': '18', 'date': 'janvier 10 2022', 'hour': '03 PM', 'valid': false, 'trainer': 'Farah ayari' },
-    { 'title': 'Boxing', 'capacity': '18', 'date': 'janvier 10 2022', 'hour': '03 PM', 'valid': false, 'trainer': 'omar msekni' },
-    { 'title': 'Karate', 'capacity': '18', 'date': 'janvier 10 2022', 'hour': '03 PM', 'valid': false, 'trainer': 'fatma ayed' },
-    { 'title': 'Back workout', 'capacity': '18', 'date': 'janvier 10 2022', 'hour': '03 PM', 'valid': false, 'trainer': 'aymen hlel' },
-    { 'title': 'Yoga', 'capacity': '18', 'date': 'janvier 10 2022', 'hour': '03 PM', 'valid': false, 'trainer': 'Ali wled ahmed sssssssss' },
-  ] ;
+  bool loading = true;
+  late List<dynamic> data;
+  final service = CoursesService();
 
   List<dynamic> eventItems = [
     {'title': 'Marathon ', 'content': "Join The Coastal Challenge Marathon on June 15, 2024, at Rivertown Beach. Lace up your running shoes for an exhilarating journey along the scenic coastline, where rolling hills meet breathtaking ocean views. With strategically placed aid stations to fuel your progress, you'll conquer every mile with determination. Finisher medals will be awarded as a testament to your achievement, followed by a vibrant post-race celebration filled with music, food, and camaraderie. Don't miss out on this opportunity to push your limits and create lasting memories. Register now and prepare for an unforgettable experience at The Coastal Challenge Marathon!", 'date': 'January 10 2022', 'hour': '10 AM', 'isChecked': true, 'count': '42', 'image': 'https://t3.ftcdn.net/jpg/06/32/28/56/360_F_632285607_jaSoMbZupPXWfOS3SNQk8lcdZIloqH3b.jpg'},
@@ -39,6 +34,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
   void initState() {
     // TODO: implement initState
     super.initState();
+    getCourses();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -46,6 +42,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+
     _tabController.dispose();
   }
 
@@ -73,14 +70,16 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                   children: [
                     SizedBox(
                       height: screenHeight * 0.778,
-                      child: ListView.builder(
+                      child: loading ?
+                            const Center(child: CircularProgressIndicator(),)
+                           : ListView.builder(
                         padding: EdgeInsets.only(
                           top: screenHeight * 0.01,
                           bottom: screenHeight * 0.01,
                           left: screenWidth * ConstantSizes.horizontalPadding,
                           right: screenWidth * ConstantSizes.horizontalPadding,
                         ),
-                        itemCount: items.length,
+                        itemCount: data.length,
                         itemBuilder: (context, index) {
                           return  Padding(
                             padding:  EdgeInsets.only(
@@ -89,12 +88,16 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                             child: SizedBox(
                               height: screenHeight * 0.12,
                               child: Item(
-                                  title: items[index]['title'],
-                                  date: items[index]['date'],
-                                  trainer: items[index]['trainer'],
-                                  capacity: items[index]['capacity'],
-                                  hour: items[index]['hour'],
-                                  valid: items[index]['valid']
+                                  callback: getCourses,
+                                  id: data[index]['_id'],
+                                  title: data[index]['nom'],
+                                  count: addZero(data[index]['count']),
+                                  date: data[index]['date'].substring(0, 10),
+                                  trainer: data[index]['coach'],
+                                  capacity: data[index]['capacite'].toString(),
+                                  hour: formatHour(data[index]['start']),
+                                  end: formatHour(data[index]['end']),
+                                  valid: data[index]['booked']
                               ),
                             ),
                           );
@@ -146,5 +149,26 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
         ),
       ],
     );
+  }
+
+  void getCourses() async{
+    if (loading == false) {
+      setState(() {
+        loading = true;
+      });
+    }
+    data = await service.getCourses();
+    loading = false;
+    setState(() {
+    });
+  }
+  String formatHour(int value) {
+    String time = addZero(value);
+    if (value > 12) time = '$time PM';
+    return '$time AM';
+  }
+  String addZero(int value) {
+    if (value < 10) return '0$value';
+    return value.toString();
   }
 }

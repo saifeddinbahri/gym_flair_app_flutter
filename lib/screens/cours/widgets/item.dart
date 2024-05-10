@@ -9,15 +9,23 @@ class Item extends StatelessWidget {
     required this.date,
     required this.capacity,
     required this.hour,
+    required this.end,
+    required this.count,
     required this.valid,
-    required this.trainer
+    required this.trainer,
+    required this.callback,
+    required this.id
   });
   final String title;
+  final String id;
   final String date;
+  final String count;
   final String hour;
-  final String trainer;
+  final String end;
+  final Map<String, dynamic> trainer;
   final bool valid;
   final String capacity;
+  final void Function() callback;
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +46,26 @@ class Item extends StatelessWidget {
           Theme.of(context).colorScheme.surfaceVariant :
           Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
-        onPressed: (){
+        onPressed: () async{
           if (!valid) {
-            showModalBottomSheet(
+            var res = await showModalBottomSheet(
                 context: context,
                 builder: (context) {
                   return ReservationDialog(
                       title: title,
+                      id: id,
+                      capacity: capacity,
+                      count: count,
                       time: hour,
+                      end: end,
                       date: date,
                       trainer: trainer,
                   );
                 }
             );
+            if (res!= null && res == 1) {
+              callback();
+            }
           }
         },
         child: Column(
@@ -75,9 +90,22 @@ class Item extends StatelessWidget {
                     )
                   ],
                 ),
-                Text(
-                  hour,
-                  style: Theme.of(context).textTheme.titleLarge,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      hour,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.01,
+                    ),
+                    Text(
+                      end,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +113,7 @@ class Item extends StatelessWidget {
                   children: [
                     const Icon(Icons.person),
                     Text(
-                      capacity,
+                      '$count/$capacity',
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ],
