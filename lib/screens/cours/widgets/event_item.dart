@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/cours/widgets/event_details.dart';
+import 'package:gym_flair/services/constant.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../shared/sizes.dart';
@@ -17,14 +18,19 @@ class EventItem extends StatelessWidget {
     required this.description,
     required this.image,
     required this.participated,
+    required this.id,
+    required this.callback
   });
   final bool participated;
+  final String id;
   final String image;
   final String title;
   final String date;
   final String hour;
   final String description;
   final String participantCount;
+  final void Function() callback;
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -44,11 +50,14 @@ class EventItem extends StatelessWidget {
             Theme.of(context).colorScheme.surfaceVariant :
             Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
-        onPressed: (){
-          Navigator.push(
+        onPressed: () async{
+          var res = await Navigator.push(
             context,
             _createRoute()
           );
+          if (res!= null && res == 1) {
+            callback();
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,7 +65,7 @@ class EventItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(ConstantSizes.circularRadius),
               child: Image.network(
-                  image,
+                  '${Constants.imageUrl}$image',
                   fit: BoxFit.fill,
                   height: screenHeight * 0.26,
                   width: screenWidth,
@@ -130,6 +139,7 @@ class EventItem extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => EventDetails(
           title: title,
+          id: id,
           hour: hour,
           date: date,
           participantCount: participantCount,

@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:gym_flair/services/events_service.dart';
 import 'package:gym_flair/shared/widgets/backward_button.dart';
 
+import '../../../services/constant.dart';
 import '../../../shared/sizes.dart';
 import 'data_container.dart';
 
@@ -15,9 +17,11 @@ class EventDetails extends StatelessWidget {
     required this.participantCount,
     required this.description,
     required this.image,
+    required this.id,
     required this.participated
   });
   final String image;
+  final String id;
   final String title;
   final String date;
   final String hour;
@@ -35,7 +39,7 @@ class EventDetails extends StatelessWidget {
       body: Stack(
         children: [
           Image.network(
-              image,
+            '${Constants.imageUrl}$image',
               fit: BoxFit.fill,
               height: screenHeight * 0.35,
               width: screenWidth,
@@ -123,7 +127,7 @@ class EventDetails extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: OutlinedButton(
-                        onPressed: participated ? null : () {} ,
+                        onPressed: participated ? null : () { submit(context);} ,
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                             side: BorderSide(
@@ -156,5 +160,14 @@ class EventDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+  void submit( BuildContext context) async {
+
+    var service = EventsService();
+    var res = await service.joinEvents(id, context);
+    if (res == 1) {
+      Navigator.pop(context,1);
+    }
+
   }
 }
