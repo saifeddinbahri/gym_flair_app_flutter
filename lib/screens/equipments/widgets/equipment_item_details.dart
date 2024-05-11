@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/equipments/widgets/input_field.dart';
+import 'package:gym_flair/services/constant.dart';
+import 'package:gym_flair/services/equipments_service.dart';
 import 'package:gym_flair/shared/widgets/backward_button.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -17,9 +19,11 @@ class EquipmentItemDetails extends StatefulWidget {
     required this.price,
     required this.description,
     required this.image,
+    required this.id,
   });
   final String label;
-  final String price;
+  final int price;
+  final String id;
   final String description;
   final String image;
 
@@ -71,7 +75,7 @@ class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
               borderRadius: BorderRadius.circular(
                   ConstantSizes.circularRadius),
               child: Image.network(
-                widget.image,
+                '${Constants.imageUrl}${widget.image}',
                 fit: BoxFit.fill,
                 height: screenHeight * 0.4,
 
@@ -236,8 +240,15 @@ class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
     );
   }
 
-  void submit() {
+  void submit() async {
 
+    var start = DateTime.now();
+    var end = start.add(Duration(hours: currentIndex));
+    var service = EquipmentsService();
+    var res = await service.reserveEquipment(widget.id, start.toIso8601String(), end.toIso8601String(), context);
+    if (res == 1) {
+      Navigator.pop(context,1);
+    }
   }
 
 }

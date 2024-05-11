@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/equipments/widgets/equipment_item.dart';
+import 'package:gym_flair/services/equipments_service.dart';
 import '../../shared/sizes.dart';
 import '../../shared/widgets/screen_title.dart';
 
@@ -13,6 +14,9 @@ class EquipmentScreen extends StatefulWidget {
 
 class _EquipmentScreenState extends State<EquipmentScreen> {
 
+  late List<dynamic> equipments;
+  bool loading = false;
+
   final List<dynamic> data = [
     {'label': 'Treadmill', 'price': '8DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
     {'label': 'Treadmill', 'price': '5DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
@@ -22,6 +26,13 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
     {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
     {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getEquipments();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +52,16 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             children: [
               SizedBox(
                 height: screenHeight * 0.82,
-                child: ListView.builder(
+                child: loading ?
+                  const Center(child: CircularProgressIndicator())
+                : ListView.builder(
                     padding: EdgeInsets.only(
                       top: screenHeight * 0.01,
                       bottom: screenHeight * 0.01,
                       left: screenWidth * ConstantSizes.horizontalPadding,
                       right: screenWidth * ConstantSizes.horizontalPadding,
                     ),
-                  itemCount: data.length,
+                  itemCount: equipments.length,
                   itemBuilder: (context, index) {
                     return  Padding(
                       padding:  EdgeInsets.only(
@@ -57,10 +70,12 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                       child: SizedBox(
                         height: screenHeight * 0.2,
                         child: EquipmentItem(
-                            label: data[index]['label'],
-                             price: data[index]['price'],
-                             image: data[index]['image'],
-                             description: data[index]['description'],
+                             callback: getEquipments,
+                             id: equipments[index]['_id'],
+                             label: equipments[index]['nom'],
+                             price: equipments[index]['prix'],
+                             image: equipments[index]['image'],
+                             description: equipments[index]['description'],
                         ),
                       ),
                     );
@@ -72,5 +87,18 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
         ),
       ],
     );
+  }
+
+  void getEquipments() async {
+    if(loading == false) {
+      setState(() {
+        loading = true;
+      });
+    }
+    var service = EquipmentsService();
+    equipments = await service.getEquipments();
+    loading = false;
+    setState(() {
+    });
   }
 }

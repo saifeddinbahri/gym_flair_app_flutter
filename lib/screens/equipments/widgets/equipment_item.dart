@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/cours/widgets/reservation_dialog.dart';
 import 'package:gym_flair/screens/equipments/widgets/equipment_item_details.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../services/constant.dart';
 import '../../../shared/sizes.dart';
 
 class EquipmentItem extends StatelessWidget {
@@ -11,9 +12,13 @@ class EquipmentItem extends StatelessWidget {
     required this.price,
     required this.description,
     required this.image,
+    required this.id,
+    required this.callback,
   });
   final String label;
-  final String price;
+  final int price;
+  final void Function() callback;
+  final String id;
   final String description;
   final String image;
 
@@ -35,11 +40,14 @@ class EquipmentItem extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
-        onPressed: (){
-          Navigator.push(
+        onPressed: () async {
+          var res = await Navigator.push(
               context,
               _createRoute()
           );
+          if (res != null && res == 1 ) {
+            callback;
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,7 +67,7 @@ class EquipmentItem extends StatelessWidget {
                     ),
                     RichText(
                         text: TextSpan(
-                          text: '$price ',
+                          text: '${price}DT ',
                           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: screenWidth *0.045,
                             fontWeight: FontWeight.w500,
@@ -80,7 +88,7 @@ class EquipmentItem extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(ConstantSizes.circularRadius),
                   child: Image.network(
-                    image,
+                    '${Constants.imageUrl}$image',
                     fit: BoxFit.fill,
                     height: screenHeight * 0.15,
                     width: screenWidth *0.35,
@@ -111,6 +119,7 @@ class EquipmentItem extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => EquipmentItemDetails(
           label: label,
+          id: id,
           price: price,
           description: description,
           image: image),
