@@ -28,13 +28,9 @@ class EquipmentItemDetails extends StatefulWidget {
 }
 
 class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
-  final TextEditingController _dateStart = TextEditingController();
-  final TextEditingController _dateEnd = TextEditingController();
-  DateTime? selectedDate;
-  final _formKey = GlobalKey<FormState>();
-  final _focusNodeStart = FocusNode();
-  final _focusNodeEnd = FocusNode();
-
+  
+  int currentIndex = 1;
+  
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery
@@ -150,67 +146,16 @@ class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
               ],
             ),
             SizedBox(height: screenHeight * 0.03,),
-            Form(
-              key: _formKey,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: screenHeight* 0.15,
-                    width: screenWidth * 0.4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const InputLabel(label: 'Start date'),
-                        SizedBox(height: screenHeight * 0.015,),
-                        InputField(
-                          readOnly: true,
-                          controller: _dateStart,
-                          focusNode: _focusNodeStart,
-                          context: context,
-                          icon: IconButton(
-                            onPressed: (){setStartDate(context);},
-                            icon: const Icon(Icons.calendar_month),
-                          ),
-                          validator: (value) {
-                            if(value == null || value.isEmpty){
-                              return "Please fill this field";
-                            }
-                            return null;
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight* 0.15,
-                    width: screenWidth * 0.4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const InputLabel(label: 'End date'),
-                        SizedBox(height: screenHeight * 0.015,),
-                        InputField(
-                          readOnly: true,
-                          focusNode: _focusNodeEnd,
-                          controller: _dateEnd,
-                          context: context,
-                          icon: IconButton(
-                            onPressed: (){setEndDate(context);},
-                            icon: const Icon(Icons.calendar_month),
-                          ),
-                          validator: (value) {
-                            if(value == null || value.isEmpty){
-                              return "Please fill this field";
-                            }
-                            return null;
-                          },
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                offer(context, 1, '01h'),
+                offer(context, 2, '02h'),
+                offer(context, 3, '03h'),
+              ],
+            ),
+            SizedBox(
+              height: screenHeight * 0.03,
             ),
             Text(
               'Description',
@@ -262,35 +207,37 @@ class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
     );
   }
 
-  Future<String> _selectDate(BuildContext context) async {
-    DateFormat dateFormat = DateFormat("dd-MM-yyyy");
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1901, 1),
-        lastDate: DateTime(2100));
-    if (picked != null) {
-      return dateFormat.format(picked);
-    }
-    return '';
-  }
-
-  void setStartDate(BuildContext context) async{
-    _dateStart.text = await _selectDate(context);
-    _focusNodeStart.unfocus();
-  }
-
-  void setEndDate(BuildContext context) async{
-    _dateEnd.text = await _selectDate(context);
-    _focusNodeEnd.unfocus();
+  Widget offer(BuildContext context, int index, String text) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          currentIndex = index;
+        });
+      },
+      child: Container(
+          height: screenHeight* 0.15,
+          width: screenWidth * 0.25,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(ConstantSizes.circularRadius),
+              color: currentIndex == index ?
+              Theme.of(context).colorScheme.surfaceVariant :
+              Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
+          ),
+        child: Center(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ) ,
+      ),
+    );
   }
 
   void submit() {
-    if(_formKey.currentState!.validate()) {
-      var start = DateFormat("dd-MM-yyyy").parse(_dateStart.text);
-      var end = DateFormat("dd-MM-yyyy").parse(_dateEnd.text);
-      log(end.difference(start).inDays.toString());
-    }
+
   }
 
 }
