@@ -15,17 +15,8 @@ class EquipmentScreen extends StatefulWidget {
 class _EquipmentScreenState extends State<EquipmentScreen> {
 
   late List<dynamic> equipments;
-  bool loading = false;
+  bool loading = true;
 
-  final List<dynamic> data = [
-    {'label': 'Treadmill', 'price': '8DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '5DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-    {'label': 'Treadmill', 'price': '10DT', 'description': 'best treadmill ever', 'image': 'https://fitfix.ca/wp-content/uploads/2023/08/IMG_1049-scaled.jpg' },
-  ];
 
   @override
   void initState() {

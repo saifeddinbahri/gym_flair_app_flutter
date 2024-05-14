@@ -246,6 +246,7 @@ class _EquipmentItemDetailsState extends State<EquipmentItemDetails> {
     var end = start.add(Duration(hours: currentIndex));
     var service = EquipmentsService();
     var res = await service.reserveEquipment(widget.id, start.toIso8601String(), end.toIso8601String(), context);
+    log(res.toString());
     if (res == 1) {
       Navigator.pop(context,1);
     }

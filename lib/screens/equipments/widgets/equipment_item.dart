@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/cours/widgets/reservation_dialog.dart';
 import 'package:gym_flair/screens/equipments/widgets/equipment_item_details.dart';
@@ -46,7 +48,7 @@ class EquipmentItem extends StatelessWidget {
               _createRoute()
           );
           if (res != null && res == 1 ) {
-            callback;
+            callback();
           }
         },
         child: Column(
