@@ -34,7 +34,6 @@ class UserService {
       log(error.toString());
       return {};
     }
-    log(response.statusCode.toString());
     if (response.statusCode == 404 || response.statusCode == 500 || response.statusCode == 401) {
       return {};
     }
@@ -128,12 +127,12 @@ class UserService {
     String? token = await storage.read(key: 'token');
     http.Response? response;
     try {
-      response = await http.post(url4,
+      response = await http.post(url3,
           headers: {
             'Authorization':'Bearer $token',
             "Content-Type": "application/json"
           },
-          body: jsonEncode({'email': birth})
+          body: jsonEncode({'birth': birth})
       );
     } catch(error) {
       log(error.toString());

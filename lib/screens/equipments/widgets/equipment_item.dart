@@ -15,12 +15,14 @@ class EquipmentItem extends StatelessWidget {
     required this.description,
     required this.image,
     required this.id,
+    required this.clickable,
     required this.callback,
   });
   final String label;
   final int price;
   final void Function() callback;
   final String id;
+  final bool clickable;
   final String description;
   final String image;
 
@@ -43,12 +45,14 @@ class EquipmentItem extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05)
         ),
         onPressed: () async {
-          var res = await Navigator.push(
-              context,
-              _createRoute()
-          );
-          if (res != null && res == 1 ) {
-            callback();
+          if (clickable) {
+            var res = await Navigator.push(
+                context,
+                _createRoute()
+            );
+            if (res != null && res == 1 ) {
+              callback();
+            }
           }
         },
         child: Column(

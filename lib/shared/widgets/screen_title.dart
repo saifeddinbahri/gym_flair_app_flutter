@@ -6,8 +6,15 @@ import 'package:gym_flair/screens/welcome/welcome_screen.dart';
 import 'package:gym_flair/shared/sizes.dart';
 
 class ScreenTitle extends StatelessWidget {
-  const ScreenTitle({super.key, required this.title});
+  const ScreenTitle({
+    super.key,
+    required this.title,
+    this.icon,
+    this.pageToNavigate
+  });
   final String title;
+  final IconData? icon;
+  final Widget? pageToNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +45,17 @@ class ScreenTitle extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          IconButton(
-              onPressed: (){
-                _disconnectDialog(context);
-              },
-              icon: const Icon(Icons.logout)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              iconButton(context),
+              IconButton(
+                  onPressed: (){
+                    _disconnectDialog(context);
+                  },
+                  icon: const Icon(Icons.logout)
+              ),
+            ],
           )
         ],
       )
@@ -100,6 +113,20 @@ class ScreenTitle extends StatelessWidget {
     );
     showDialog(context: context,
         builder:(BuildContext context)=>alert
+    );
+  }
+  Widget iconButton(BuildContext context) {
+    if(icon == null) return const SizedBox();
+    return IconButton(
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (e)=>pageToNavigate!,
+            ),
+          );
+        },
+        icon: Icon(icon)
     );
   }
 }

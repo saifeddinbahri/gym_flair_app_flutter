@@ -61,6 +61,7 @@ class EquipmentsService {
       errorDialog(context, size, 'An error as occurred');
     } else {
       var data = jsonDecode(response.body);
+      log(response.statusCode.toString());
       if( response.statusCode == 200) {
         return 1;
       } else if (response.statusCode == 409) {

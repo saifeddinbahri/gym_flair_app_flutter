@@ -1,6 +1,9 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/equipments/widgets/equipment_item.dart';
+import 'package:gym_flair/screens/equipments/widgets/my_equip_screen.dart';
 import 'package:gym_flair/services/equipments_service.dart';
 import '../../shared/sizes.dart';
 import '../../shared/widgets/screen_title.dart';
@@ -33,7 +36,10 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const ScreenTitle(title: 'Equipments'),
+        const ScreenTitle(title: 'Equipments',
+          icon: Icons.shopping_cart_checkout,
+          pageToNavigate:  MyequipmentScreen(),
+        ),
         Padding(
           padding: EdgeInsets.only(
             top: screenHeight * 0.005,
@@ -66,6 +72,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                              label: equipments[index]['nom'],
                              price: equipments[index]['prix'],
                              image: equipments[index]['image'],
+                             clickable: true,
                              description: equipments[index]['description'],
                         ),
                       ),
@@ -87,7 +94,12 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
       });
     }
     var service = EquipmentsService();
-    equipments = await service.getEquipments();
+    var data = await service.getEquipments();
+    if( data[0] != null) {
+      equipments = data.where((element) => !element['isYou']).toList();
+    } else {
+      equipments = [];
+    }
     loading = false;
     setState(() {
     });

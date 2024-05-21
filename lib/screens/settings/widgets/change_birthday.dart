@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/settings/widgets/input_label.dart';
 import 'package:gym_flair/screens/settings/widgets/submit_button.dart';
@@ -111,7 +113,8 @@ class _ChangeBirthdayState extends State<ChangeBirthday> {
   void submit() async {
     if (_formKey.currentState!.validate()) {
       var service = UserService();
-      var res = await service.editBirth(_date.text, context);
+      var res = await service.editBirth(selectedDate!.toIso8601String(), context);
+      log(res.toString());
       if (res == 1) {
         Navigator.pop(context,1);
       }
