@@ -1,17 +1,23 @@
+import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrScannerScreen extends StatefulWidget {
-  const QrScannerScreen({super.key});
+  const QrScannerScreen({
+    super.key,
+    required this.socket
+  });
+  final IO.Socket socket;
 
   @override
   State<QrScannerScreen> createState() => _QrScannerScreenState();
 }
 
 class _QrScannerScreenState extends State<QrScannerScreen> {
-
+  final storage = const FlutterSecureStorage();
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey();
@@ -23,6 +29,8 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     controller.scannedDataStream.listen((scanData) async {
       if (scanData.code != null) {
         await controller.pauseCamera();
+        String? token = await storage.read(key: 'token');
+        widget.socket.emit('scanCode', {"code": scanData.code, "token": token});
         if (mounted)  Navigator.pop(context);
       }
     });

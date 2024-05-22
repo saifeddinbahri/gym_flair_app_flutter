@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/home/widgets/qr_scanner_screen.dart';
 import '../../../shared/sizes.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ScanQrCodeButton extends StatelessWidget {
-  const ScanQrCodeButton({super.key});
-
+  const ScanQrCodeButton({super.key, required this.socket});
+  final IO.Socket socket;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -14,7 +15,7 @@ class ScanQrCodeButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (e) => const QrScannerScreen(),
+              builder: (e) => QrScannerScreen(socket: socket),
             ),
           );
         },

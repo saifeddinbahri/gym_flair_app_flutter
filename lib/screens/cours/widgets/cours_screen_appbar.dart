@@ -74,7 +74,7 @@ class CoursesScreenAppbar extends StatelessWidget {
                   Padding(
                     padding:  EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.13 ,
-                        vertical: screenHeight *0.01
+                        vertical: screenHeight *0.008
                     ),
                     child: Text(
                       'Classes',
@@ -86,7 +86,7 @@ class CoursesScreenAppbar extends StatelessWidget {
                   Padding(
                     padding:  EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.13 ,
-                        vertical: screenHeight *0.01
+                        vertical: screenHeight *0.008
                     ),
                     child: Text(
                       'Events',

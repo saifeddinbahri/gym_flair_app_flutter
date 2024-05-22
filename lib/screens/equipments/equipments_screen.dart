@@ -48,7 +48,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: screenHeight * 0.82,
+                height: screenHeight * 0.818,
                 child: loading ?
                   const Center(child: CircularProgressIndicator())
                 : ListView.builder(

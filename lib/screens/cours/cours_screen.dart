@@ -67,7 +67,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(
-                      height: screenHeight * 0.778,
+                      height: screenHeight * 0.776,
                       child: loadingCourses ?
                             const Center(child: CircularProgressIndicator(),)
                            : ListView.builder(
@@ -109,7 +109,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                    SizedBox(
-                     height: screenHeight * 0.778,
+                     height: screenHeight * 0.776,
                      child: loadingEvents ?
                             const Center(child: CircularProgressIndicator())
                           : ListView.builder(
@@ -131,7 +131,7 @@ class _CoursesScreenState extends State<CoursesScreen> with SingleTickerProvider
                                  callback: getEvents,
                                  title: eventData[index]['nom'],
                                  id: eventData[index]['_id'],
-                                 date: eventData[index]['date'],
+                                 date: eventData[index]['date'].substring(0, 10),
                                  description: eventData[index]['desc'],
                                  participantCount: addZero(eventData[index]['count']),
                                  hour: formatHour(eventData[index]['start']),

@@ -1,8 +1,12 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gym_flair/screens/home/widgets/scan_qr_code_button.dart';
 import 'package:gym_flair/screens/home/widgets/section_container.dart';
+import 'package:gym_flair/services/constant.dart';
 import '../../shared/sizes.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../shared/widgets/screen_title.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +17,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  late IO.Socket socket;
+  int count = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    socket = IO.io('http://${Constants.url}', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+    socket.connect();
+    socket.on('count', (data) => {
+      log(data.toString()),
+      setState(() {count = data;})
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +56,36 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: screenHeight * 0.03),
-                const SectionContainer(
+                 SectionContainer(
                   title: 'QR Scan',
-                  child: ScanQrCodeButton()
+                  child: ScanQrCodeButton(
+                    socket: socket,
+                  )
                 ),
                 SizedBox(height: screenHeight * 0.03),
+                 SectionContainer(
+                    title: 'Gym count',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.person),
+                        SizedBox(width: screenWidth * 0.01,),
+                        Text(
+                          addZero(count),
+                          style: Theme.of(context).textTheme.titleLarge,
+                        )
+                      ],
+                    )
+                ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+  String addZero(int value) {
+    if (value < 10) return '0$value';
+    return value.toString();
   }
 }
