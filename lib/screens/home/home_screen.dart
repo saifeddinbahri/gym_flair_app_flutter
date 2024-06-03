@@ -31,9 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     socket.connect();
     socket.on('count', (data) => {
-      log(data.toString()),
-      setState(() {count = data;})
+      if (mounted) {
+        setState(() {count = data;})
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    socket.disconnect();
   }
 
   @override

@@ -21,7 +21,7 @@ class SignInService {
       response = await http.post(url,
         headers: { "Content-Type": "application/json" },
         body: jsonEncode(data)
-      );
+      ).timeout(const Duration(seconds: 6));
     } catch (error) {
       log(error.toString());
       response = null;
