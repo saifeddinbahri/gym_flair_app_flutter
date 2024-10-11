@@ -1,16 +1,30 @@
-# gym_flair
+# GymFlair
 
-A new Flutter project.
+GymFlair is a mobile application built with Flutter that allows users to rent gym equipment, join training sessions, and check the current number of people inside the gym. The app aims to enhance the gym experience by providing seamless equipment rental and training session management.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Equipment Rental:** Browse and rent available gym equipment.
+- **Training Sessions:** Join training sessions and view upcoming classes.
+- **Live Gym Status:** Check the current number of people inside the gym.
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone repository  
+```
+git clone https://github.com/saifeddinbahri/gym_flair_app_flutter.git
+```
+2. Navigate to the project directory
+```
+cd project_directory
+```
+3. Install dependencies
+```
+flutter pub get
+```
+4. Run the app
+```
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Important:** This project requires its [backend](https://github.com/saifeddinbahri/gym_flair_backend_express.js.git) to function properly.
